@@ -4,6 +4,9 @@ import Item from "./components/Item";
 import FavItem from "./components/FavItem";
 import { addFav, fetchAnother, getFavsFromLocalStorage } from "./actions";
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 export default function App() {
   const loading = useSelector((state) => state.loading);
@@ -18,6 +21,10 @@ export default function App() {
   function addToFavs() {
     const favWithId = { ...current, id: Date.now() };
     dispatch(addFav(favWithId));
+    toast.success("Favorilere başarıyla eklendi!", {
+      autoClose: 5000,
+      onClose: () => dispatch(fetchAnother()),
+    });
   }
 
   function handleFetchAnother() {
@@ -49,9 +56,10 @@ export default function App() {
 
       <Switch>
         <Route exact path="/">
-          {loading && <div className="bg-white p-6 text-center shadow-md">YÜKLENİYOR</div>}
+          {loading && (
+            <div className="bg-white p-6 text-center shadow-md">YÜKLENİYOR</div>
+          )}
           {current && <Item data={current} />}
-
           <div className="flex gap-3 justify-end py-3">
             <button
               className="select-none px-4 py-2 border border-blue-700 text-blue-700 hover:border-blue-500 hover:text-blue-500"
@@ -65,17 +73,21 @@ export default function App() {
             >
               Favorilere ekle
             </button>
-          </div>
+          </div>{" "}
+          <ToastContainer />
         </Route>
 
         <Route path="/favs">
           <div className="flex flex-col gap-3">
-            {favs.length > 0
-              ? favs.map((item) => (
+            {favs.length > 0 ? (
+              favs.map((item) => (
                 <FavItem key={item.id} id={item.id} title={item.fact} />
               ))
-              : <div className="bg-white p-6 text-center shadow-md">Henüz bir favoriniz yok</div>
-            }
+            ) : (
+              <div className="bg-white p-6 text-center shadow-md">
+                Henüz bir favoriniz yok
+              </div>
+            )}
           </div>
         </Route>
       </Switch>

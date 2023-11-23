@@ -14,6 +14,7 @@ export default function App() {
   }, [dispatch]);
 
   function addToFavs() {
+    if (current) dispatch(addFav(current));
   }
 
   function handleFetchAnother() {

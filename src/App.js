@@ -23,6 +23,10 @@ export default function App() {
   function handleFetchAnother() {
     dispatch(fetchAnother());
   }
+  useEffect(() => {
+    dispatch(getFavsFromLocalStorage());
+    dispatch(fetchAnother());
+  }, [dispatch]);
   return (
     <div className="wrapper max-w-xl mx-auto px-4">
       <nav className="flex text-2xl pb-6 pt-8 gap-2 justify-center">

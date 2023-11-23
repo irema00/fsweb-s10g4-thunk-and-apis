@@ -16,7 +16,8 @@ export default function App() {
   }, [dispatch]);
 
   function addToFavs() {
-    if (current) dispatch(addFav(current));
+    const favWithId = { ...current, id: Date.now() };
+    dispatch(addFav(favWithId));
   }
 
   function handleFetchAnother() {

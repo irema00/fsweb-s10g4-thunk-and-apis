@@ -6,7 +6,9 @@ import { addFav, fetchAnother } from "./actions";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function App() {
-  const { loading, current, favs } = useSelector((state) => state);
+  const loading = useSelector((state) => state.loading);
+  const current = useSelector((state) => state.current);
+  const favs = useSelector((state) => state.favs);
   const dispatch = useDispatch();
 
   useEffect(() => {

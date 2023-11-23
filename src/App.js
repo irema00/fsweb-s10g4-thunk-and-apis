@@ -6,7 +6,12 @@ import { addFav, fetchAnother } from "./actions";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function App() {
+  const { loading, current, favs } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAnother());
+  }, [dispatch]);
 
   function addToFavs() {
   }
